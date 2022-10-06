@@ -1,10 +1,10 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-	static Stack<Integer> stack;
 	static List<Integer>[] list;
 	static boolean visited[] ;
 	
@@ -13,7 +13,6 @@ public class Main {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
-		stack = new Stack<>();
 		//초기화 
 		list = new ArrayList[N+1];
 		visited = new boolean[N+1];
@@ -47,7 +46,6 @@ public class Main {
 				func(next);
 			}
 		}
-//		stack.add(start);
 		System.out.print(start+" ");
 	}
 
