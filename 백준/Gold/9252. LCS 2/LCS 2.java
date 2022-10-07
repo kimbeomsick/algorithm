@@ -29,9 +29,7 @@ public class Main {
 		}
 
 
-//		for(int[] d: dp) {
-//			System.out.println(Arrays.toString(d));
-//		}
+ 
 		// 부분수열 담아둘 큐
 		Stack<Character> s = new Stack<>();
 		// 초기값 설정
@@ -45,15 +43,12 @@ public class Main {
 				i--;
 				j--;
 			} else { // 같은 값이 아니면 바로 왼쪽으로 이동하고 한번 맞는지 확인함
-				if (j == 1) {
-					i--;
-				} else {
 					if(dp[i][j] == dp[i][j-1]) { // 왼쪽이랑 같으면 이동
 						j--;
 					}else { // 왼쪽이랑 같지 않으면 아래로 이동 
 						i--;
 					}
-				}
+				
 			}
 		} // end while
 
