@@ -78,8 +78,7 @@ public class Main {
 
         while(!pq.isEmpty()){
             Node curr = pq.poll();
-
-            if(curr.num == N) return curr.val;
+            
 
             if(!visited[curr.cnt][curr.num]){ //방문하지 않았다면...
                 visited[curr.cnt][curr.num] =true; //방문처리함
@@ -103,7 +102,13 @@ public class Main {
                 }
             }
         }
-        return -1;
+        long result = Long.MAX_VALUE;
+        for(int i = 0;i<=K;i++){
+            result = Math.min(dist[i][N],result);
+        }
+
+    return result;
+
     }
 
 }
