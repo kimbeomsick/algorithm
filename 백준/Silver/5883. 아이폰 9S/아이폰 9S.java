@@ -11,7 +11,7 @@ public class Main {
 //        StringTokenizer st = new StringTokenizer(br.readLine());
 
         int N = Integer.parseInt(br.readLine());
-        int result = 1; // 0이면 무슨 차이가 있지?
+        int result = 1;
         int[] arr = new int[N];
         boolean[] index = new boolean[10000001];
         for (int i = 0; i < N; i++) {
@@ -23,9 +23,9 @@ public class Main {
 
         for (int n = 0; n <= 10000000; n++) {
             if (index[n]) {
-                int pre = arr[0];
+                int pre = -1;
                 int cnt = 1;
-                for (int i = 1; i < N; i++) {
+                for (int i = 0; i < N; i++) {
                     //통과해야하는 값
                     if (arr[i] == n) continue;
 
@@ -41,7 +41,7 @@ public class Main {
             }
         }
 
-        System.out.println(result);
+        System.out.println(result); // 0
 
     }
 }
