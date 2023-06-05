@@ -1,31 +1,28 @@
+import java.util.*;
+
 class Solution {
-    
+   static ArrayList<Integer> list = new ArrayList<>();
     public int solution(int n) {
-        int answer = 1;
         
+        list.add(2);
         for(int i = 3;i <= n;i++){
             if(func(i)){
                 
-                answer++;
+                list.add(i);
             }
         }
         
-        return answer;
+        return list.size();
     }
     
     public static boolean func(int num){
         
-        int cnt = 0;
-        for(int i = 2 ; i*i <= num ;i++){ // 1은 너무 자명한거라 빼버림
-            if(num%i == 0){
-                return false;
-            }
-            
-            if(i*i == num){
-                return false;
-            }
-        }
         
+        for(int j = 0 ; j < list.size() ;j++){ // 1은 너무 자명한거라 빼버림
+            int i = list.get(j);
+            if(num%i == 0) return false; //나눠지면 탈출
+            if(i*i > num) break; //제곱근을 넘어가면 탈출
+        }
         return true;
     }
 }
