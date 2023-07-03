@@ -17,7 +17,7 @@ class Solution {
         
         for(String order : orders){
             char[] orderChar = order.toCharArray();
-            Arrays.sort(orderChar);
+            Arrays.sort(orderChar); // abc cba 를 주문해도 abc가 두번 주문된것이기 때문에 모든 메뉴에 대해 정렬 필요
             makeMenu(0,0,"",orderChar);
         }
         
@@ -25,21 +25,19 @@ class Solution {
         ArrayList<String> list = new ArrayList<>();
         //하나씩 꺼내보기
         for(String key : map.keySet()){
-            if(course_cnt[key.length()] == map.get(key)&& map.get(key)>1){ //해당 메뉴가 최고로 많이 불렸다면
+            //해당 메뉴조합이 최고로 많이 불린 횟수 ans 2번이상 사용되어야함
+            if(course_cnt[key.length()] == map.get(key)&& map.get(key)>1){ 
                 list.add(key);    
-                // System.out.printf("key:%s, Cnt:%d\n",key,map.get(key));
             }
         }
-        System.out.println(Arrays.toString(course_cnt));
-        Collections.sort(list);
+        
+        Collections.sort(list); //정렬
         
         
         String[] answer = new String[list.size()];
         for(int i = 0;i<list.size();i++){
             answer[i] = list.get(i);
         }
-        
-
         
         
         return answer;
@@ -48,7 +46,7 @@ class Solution {
     public static void makeMenu(int idx, int depth, String key, char[] order){
         if(course_cnt[depth] != -1){
             map.put(key,map.getOrDefault(key,0)+1); //기존거 가져오기 or 0
-            course_cnt[depth] = Math.max(course_cnt[depth], map.get(key)); // course중에 가장 많이 불린 횟수 저장 
+            course_cnt[depth] = Math.max(course_cnt[depth], map.get(key)); // 단품조합( ex) 2,3,5 )이 중에 가장 많이 불린 횟수 저장 
         }
         
         for(int i = idx; i<order.length;i++){
