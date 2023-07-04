@@ -23,15 +23,15 @@ class Solution {
         int ad_len = timeToNumber(adv_time); //광고 총 시간
         
         
-        long max_time = 0;  //얼마나 많이 보는지 확인
-        for(int i = 0;i<ad_len;i++){
-            max_time += (long)timeline[i]; //초기 최댓값
+        int max_time = 0;  //얼마나 많이 보는지 확인
+        for(int i = 0;i<=ad_len;i++){
+            max_time += timeline[i]; //초기 최댓값
         }
         
         int start_time = 0; //광고 시작시간
         int idx = 0; //제일 광고를 많이 볼수 있는 시작 시간
         int end_time = ad_len; //광고 끝나는 시간 =>마지막 값은 시청시간에 포함하지 않게된다. 
-        long time = max_time;
+        int time = max_time;
         while(end_time <= total_time+5){ //마지막 시간을 못줌; 
   
             if(max_time < time){
@@ -39,7 +39,7 @@ class Solution {
                 max_time = time;
             }
             
-            time = time + (long)timeline[end_time] - (long)timeline[start_time]; //이건 그 사이에 있는 값이 아니다; 
+            time = time + timeline[end_time] - timeline[start_time]; //이건 그 사이에 있는 값이 아니다; 
             
             end_time++;
             start_time++; 
