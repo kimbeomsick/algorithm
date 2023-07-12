@@ -1,29 +1,52 @@
 import java.util.*;
 
+
 class Solution {
-    
-    static Map<Double, Integer> map = new HashMap<>();
+    static Stack<Integer> stack = new Stack<>();
+    static boolean[] visited ;
+    static long answer = 0;
     public long solution(int[] weights) {
-        long answer = 0;
         
+        
+        visited = new boolean[weights.length];
+        func(0,0,weights);
+        return answer;
+    }
     
-        Arrays.sort(weights);
-        
-        for(int i = 0;i<weights.length;i++){
-            double a = weights[i];
-            double b = weights[i]*2.0 / 3.0;
-            double c = weights[i]/ 2.0;
-            double d = weights[i]*3.0 / 4.0;
-            
-            
-            if(map.containsKey(a)) answer += map.get(a); // 나와 짝꿍이 될수 있는자 추가함
-            if(map.containsKey(b)) answer += map.get(b); // 나와 짝꿍이 될수 있는자 추가함
-            if(map.containsKey(c)) answer += map.get(c); // 나와 짝꿍이 될수 있는자 추가함
-            if(map.containsKey(d)) answer += map.get(d); // 나와 짝꿍이 될수 있는자 추가함
-            
-            map.put((double)weights[i],map.getOrDefault((double)weights[i],0)+1);
+    public static void func(int idx , int depth, int[] weights){
+        if(depth == 2){
+            if(isCollect())answer++;
+            return ;
         }
         
-        return answer;
+        for(int i = idx;i<weights.length;i++){
+            if(!visited[i]){
+                visited[i] = true;
+                stack.push(weights[i]);
+                func(i+1, depth+1,weights);
+                stack.pop();
+                visited[i] = false;
+            }
+            
+        }
+    }
+    
+    public static boolean isCollect(){
+        
+        if(stack.get(0) == stack.get(1))return true;
+        
+        
+        for(int i = 2;i<=4;i++){
+            for(int j = 2;j<=4;j++){
+                if(i != j){
+                    if(stack.get(0)*i == stack.get(1)*j){
+                      System.out.printf("%d * %d === %d * %d\n",stack.get(0),i,stack.get(1),j);
+                        return true;
+                    } 
+                }        
+            }
+        }
+        
+        return false;
     }
 }
