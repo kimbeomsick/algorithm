@@ -1,56 +1,71 @@
-import java.util.*;
+ import java.util.*;
+
+
 
 class Solution {
-     public static int solution(int n, int[] cores) {
+    public int solution(int n, int[] cores) {
         int answer = 0;
+        int len = cores.length; // 프로세스의 길이 
+        
+        
+        int right = 0;
+        for(int i = 0;i<len;i++){
+            right = Math.max(right, cores[i]); // 제일 큰 값 찾기 
+        }
+        
+        // 시간을 작업을 n번하기 위한 시간을 찾아라 
+        int left = 0 ;
+        right = right * (n/len);
+        
+        int working_cnt = 0;
+        System.out.printf("left:%d  right:%d\n",left,right);
+        while(left+1 < right){
+            int mid = (left+right)/2;
 
-        int min = 0; // 시간의 최소값
-        int max = cores[0]*n; // 시간의 최대값
-
-        int time = 0;
-        int m = 0; // time까지 처리한 작업량
-
-        while (min <= max) {  
-            int mid = (min+max)/2;
-
-            int count = CountWork(mid, cores);
-
-            if (count >= n) { // 해당시간까지 처리한 작업량보다 n이 크면 time과 m갱신
-                max = mid-1;   
-                time = mid;     
-                m = count; 
+            if(work(mid,cores) >= n){ // mid시간의 작업량이 찾는거랑 같거나 더 크면 
+                right = mid; //큰쪽이 내려온다. 
+                    
             }else{
-                min = mid+1;
+                left = mid;
             }
         }
-
-        m-=n; // 처리한 작업량과 n의 차이 갱신
-        for(int i = cores.length-1; i>=0; i--){
-            if (time % cores[i] == 0) { // 시간이 time일때, 작업을 처리하는 core
-                if (m == 0) {
-                    answer = i+1;
-                    break;
+        
+        System.out.printf("right : %d\n",right);
+        
+        // 내가 비교할 작업시간은 right
+        
+        int cnt = work(right,cores) - n; // 실제 작업량과 내가 찾은 시간의 작업량이 얼마나 차이나는지 확인         
+        for(int i = cores.length-1;i>=0;i--){
+            if(right%cores[i] == 0){
+                if(cnt == 0){
+                    return i+1;
+                }else{
+                    cnt --;    
                 }
-                m--;
+                
             }
+        
         }
-
-        return answer;
+        
+        
+        
+        
+        
+        
+        
+        return 0;
     }
-
-    static int CountWork(int time, int[] cores){
-
-        if (time == 0) { // 시간이 0일 때, 처리할 수 있는 작업량은 코어의 개수 
+    
+    // time에 할 수 있는 작업량 찾기
+    public static int work(int time, int[] cores){
+        if(time == 0){ //작업 시간이 0시간이면 
             return cores.length;
         }
-
-        int count = cores.length; // 시간이 0일 때, 처리한 작업량 
-
-        for(int i = 0; i<cores.length; i++){ // time까지 코어가 처리할 수 있는 작업량 합산
-            count += (time/cores[i]);
+        
+        int result = 0;
+        for(int i = 0;i<cores.length;i++){
+            result += time/cores[i];
         }
-
-        return count;
+        return result+cores.length;
     }
-
 }
