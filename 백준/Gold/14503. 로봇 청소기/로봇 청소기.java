@@ -1,4 +1,5 @@
 
+
 import java.io.*;
 import java.util.*;
 
@@ -10,6 +11,7 @@ public class Main
 	static int[] dc = {0,1,0,-1};
 	static int R,C;
 	static boolean end = false;
+	static int result = 0;
 	
     public static void main(String[] args) throws Exception
     {
@@ -36,6 +38,8 @@ public class Main
         }
         
         func(r,c,dir);
+        
+        //지나간 길 개수확인 
         int sum = 0;
         for(int i = 0;i<R;i++) {
         	
@@ -45,19 +49,17 @@ public class Main
         		}
         	}
         }
+//        show();
+        System.out.println(-result);
         
-        System.out.println(sum);
     }
     
     static public void func(int r,int c, int dir) {
-//    	System.out.printf("(%d,%d)\n",r,c);
-//    	showMap();
-//    	System.out.println("\n\n");
-    	
+
     	
     	if(end) return ;
     	if(map[r][c] == 0 ) {
-    		map [r][c] = 2;
+    		map [r][c] = --result;
     	}
     	
     	
@@ -66,7 +68,6 @@ public class Main
     		int ndir = (dir+i)%4;
     		int nr = r+dr[ndir];
     		int nc = c+dc[ndir];
-//    		System.out.printf("map[%d][%d]:%d\n",nr,nc,map[nr][nc]);
     		if(nr < 0 || nr >=R || nc <0 || nc >=C)continue; // 길에서 벗어나면 안됨 
     		if(map[nr][nc] == 0) {
     			func(nr,nc,ndir);
@@ -81,18 +82,16 @@ public class Main
     	
     	//뒤로가는데 벽이고 , 혹은 화면 밖으로 나간다면 아웃...
     	if((nr < 0 || nr >=R || nc <0 || nc >=C)|| map[nr][nc] == 1 ) {
-    		end = true;
+    		end = true; // 이제부터 뒤로가겠다는 이야기 
     		return ;
     	}
     	func(nr,nc,dir);
     }
 
-    static public void showMap () {
+    static public void show() {
     	for(int[] m : map) {
     		System.out.println(Arrays.toString(m));
     	}
-    	
-    	
     }
 
 }
